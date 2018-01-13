@@ -13,14 +13,8 @@ from time import strftime
 import locale
 
 """
-Deskripsi spesifikasi versi tahap 6 (6utama_tahap.py):
-- Finishing Status Lengkap
-- Set waktu lokal diatur ke Bahasa Indonesia dengan library locale ke id_ID.utf-8
-- Formasi waktu didapat dari library time.strftime
-- Catat Waktu Eksekusi Untuk Status Lengkap --> catat_waktu = strftime('%A, %d %B %Y, pukul %X (%Z)')
-- Kata-kata "<perangkat> DINYALAKAN atau DIMATIKAN" dibuat ke dalam variabel untuk persiapan revisi kode dinamik (efisiensi kodingan)
-- Pada Status Lengkap tidak digunakan kata DINYALAKAN atau DIMATIKAN (cukup NYALA dan MATI) untuk mempermudah pengerjaan kode
-- Nama pengguna (oleh <pengguna>) masih data dummy (belum didaftarkan berdasarkan chat id)
+Deskripsi spesifikasi versi tahap 7 (7utama_tahap.py):
+- Pendaftaran ID user untuk Status Lengkap
 """
 
 
@@ -36,6 +30,14 @@ locale.setlocale(locale.LC_ALL, 'id_ID.utf8')
 
 #Inisialisasi catat_waktu
 catat_waktu = ['catat_waktu1', 'catat_waktu2', 'catat_waktu3', 'catat_waktu4', 'catat_waktu5']
+
+#Pengenalan kepemilikan ID user
+id_user = {223107165: 'Ayah', 239526959: 'Mamah', 148554570: 'Isal', 460358488: 'Calon Mantu'}
+
+#Inisialisasi oleh (siapa 'pengguna' untuk 'perangkat ke-'). Versi dinamis dari catat_waktu
+oleh = []
+for i in range(1,6):
+    oleh.append('pengguna%s' %i)
 
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
@@ -69,55 +71,65 @@ def on_callback_query(msg):
             status1_on = 'Kos Lampu Luar DINYALAKAN'
             bot.answerCallbackQuery(query_id, text=status1_on, show_alert=True)
             catat_waktu[0] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[0] = id_user[from_id]
         elif gpiostatus.status_kos_lampu_luar() == 'menyala':
             lampu.lampu_off(pin_lampu[0])
             status1_off = 'Kos Lampu Luar DIMATIKAN'
             bot.answerCallbackQuery(query_id, text=status1_off, show_alert=True)
             catat_waktu[0] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[0] = id_user[from_id]
     elif data == 'kos_lampu_dalam_cewek':
         if gpiostatus.status_kos_lampu_dalam_cewek() == 'mati':
             lampu.lampu_on(pin_lampu[1])
             status2_on = 'Kos Lampu Dalam Cewek DINYALAKAN'
             bot.answerCallbackQuery(query_id, text=status2_on, show_alert=True)
             catat_waktu[1] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[1] = id_user[from_id]
         elif gpiostatus.status_kos_lampu_dalam_cewek() == 'menyala':
             lampu.lampu_off(pin_lampu[1])
             status2_off = 'Kos Lampu Dalam Cewek DIMATIKAN'
             bot.answerCallbackQuery(query_id, text=status2_off, show_alert=True)
             catat_waktu[1] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[1] = id_user[from_id]
     elif data == 'kos_lampu_dalam_cowok':
         if gpiostatus.status_kos_lampu_dalam_cowok() == 'mati':
             lampu.lampu_on(pin_lampu[2])
             status3_on = 'Kos Lampu Dalam Cowok DINYALAKAN'
             bot.answerCallbackQuery(query_id, text=status3_on, show_alert=True)
             catat_waktu[2] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[2] = id_user[from_id]
         elif gpiostatus.status_kos_lampu_dalam_cowok() == 'menyala':
             lampu.lampu_off(pin_lampu[2])
             status3_off = 'Kos Lampu Dalam Cowok DIMATIKAN'
             bot.answerCallbackQuery(query_id, text=status3_off, show_alert=True)
             catat_waktu[2] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[2] = id_user[from_id]
     elif data == 'dispenser_cewek':
         if gpiostatus.status_dispenser_cewek() == 'mati':
             terminal.terminal_on(pin_terminal[0])
             status4_on = 'Dispenser Cewek DINYALAKAN'
             bot.answerCallbackQuery(query_id, text=status4_on, show_alert=True)
             catat_waktu[3] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[3] = id_user[from_id]
         elif gpiostatus.status_dispenser_cewek() == 'menyala':
             terminal.terminal_off(pin_terminal[0])
             status4_off = 'Dispenser Cewek DIMATIKAN'
             bot.answerCallbackQuery(query_id, text=status4_off, show_alert=True)
             catat_waktu[3] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[3] = id_user[from_id]
     elif data == 'dispenser_cowok':
         if gpiostatus.status_dispenser_cowok() == 'mati':
             terminal.terminal_on(pin_terminal[1])
             status5_on = 'Dispenser Cowok DINYALAKAN'
             bot.answerCallbackQuery(query_id, text=status5_on, show_alert=True)
             catat_waktu[4] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[4] = id_user[from_id]
         elif gpiostatus.status_dispenser_cowok() == 'menyala':
             terminal.terminal_off(pin_terminal[1])
             status5_off = 'Dispenser Cowok DIMATIKAN'
             bot.answerCallbackQuery(query_id, text=status5_off, show_alert=True)
             catat_waktu[4] = strftime('%A, %d %B %Y, pukul %X (%Z)')
+            oleh[4] = id_user[from_id]
     elif data == 'status':
         bot.answerCallbackQuery(query_id, text='Status kondisi perangkat listrik saat ini:\n\n'
         '1. Kos Lampu Luar ' + gpiostatus.status_kos_lampu_luar().upper() + '\n'
@@ -127,15 +139,15 @@ def on_callback_query(msg):
         '5. Dispenser Cowok ' + gpiostatus.status_dispenser_cowok().upper(), show_alert=True)
     elif data == 'status_lengkap':
         kll   = bot.sendMessage(from_id, '1. Kos Lampu Luar ' + gpiostatus.status_kos_lampu_luar().upper() + 
-        '\npada ' + catat_waktu[0] + '\noleh Ayah')
+        '\npada ' + catat_waktu[0] + '\noleh '+ oleh[0])
         kldce = bot.sendMessage(from_id, '2. Kos Lampu Dalam Cewek ' + gpiostatus.status_kos_lampu_dalam_cewek().upper() + 
-        '\npada ' + catat_waktu[1] + '\noleh Emah')
+        '\npada ' + catat_waktu[1] + '\noleh ' + oleh[1])
         kldco = bot.sendMessage(from_id, '3. Kos Lampu Dalam Cowok ' + gpiostatus.status_kos_lampu_dalam_cowok().upper() + 
-        '\npada ' + catat_waktu[2] + '\noleh Isal')
+        '\npada ' + catat_waktu[2] + '\noleh ' + oleh[2])
         dice  = bot.sendMessage(from_id, '4. Dispenser Cewek ' + gpiostatus.status_dispenser_cewek().upper() + 
-        '\npada ' + catat_waktu[3] + '\noleh Ede')
+        '\npada ' + catat_waktu[3] + '\noleh ' + oleh[3])
         dico  = bot.sendMessage(from_id, '5. Dispenser Cowok ' + gpiostatus.status_dispenser_cowok().upper() + 
-        '\npada ' + catat_waktu[4] + '\noleh Emah')
+        '\npada ' + catat_waktu[4] + '\noleh ' + oleh[4])
 
         kll_identifier   = telepot.message_identifier(kll)
         kldce_identifier = telepot.message_identifier(kldce)
