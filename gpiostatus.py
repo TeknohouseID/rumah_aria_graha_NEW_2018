@@ -11,37 +11,37 @@ status_pin = [7, 0, 2 ,3, 4]
 
 def status_kos_lampu_luar():
     status1 = wiringpi.digitalRead(status_pin[0])
-    if status1 == 0:
+    if status1 == 1:
         return 'menyala'
-    elif status1 == 1:
+    elif status1 == 0:
         return 'mati'
 
 def status_kos_lampu_dalam_cewek():
     status2 = wiringpi.digitalRead(status_pin[1])
-    if status2 == 0:
+    if status2 == 1:
         return 'menyala'
-    elif status2 == 1:
+    elif status2 == 0:
         return 'mati'
 
 def status_kos_lampu_dalam_cowok():
     status3 = wiringpi.digitalRead(status_pin[2])
-    if status3 == 0:
+    if status3 == 1:
         return 'menyala'
-    elif status3 == 1:
+    elif status3 == 0:
         return 'mati'
 
 def status_dispenser_cewek():
     status4 = wiringpi.digitalRead(status_pin[3])
-    if status4 == 0:
+    if status4 == 1:
         return 'menyala'
-    elif status4 == 1:
+    elif status4 == 0:
         return 'mati'
 
 def status_dispenser_cowok():
     status5 = wiringpi.digitalRead(status_pin[4])
-    if status5 == 0:
+    if status5 == 1:
         return 'menyala'
-    elif status5 == 1:
+    elif status5 == 0:
         return 'mati'
 
 
