@@ -7,10 +7,10 @@ pin_lampu = [7,11,13]	#definisi pin GPIO yg terhubung ke relay lampu
 GPIO.setup(pin_lampu, GPIO.OUT)
 
 def lampu_on(pin):		#fungsi untuk menyalakan lampu (NC)
-	GPIO.output(pin, 0)
+	GPIO.output(pin, 1)
 
 def lampu_off(pin):		#fungsi untuk mematikan lampu (NC)
-	GPIO.output(pin, 1)
+	GPIO.output(pin, 0)
 
 
 
